@@ -12,10 +12,10 @@ supports 'centos windows'
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when
 # uploaded to a Supermarket.
 #
-issues_url 'https://github.exacttarget.com/chef-supermarket/jenkins_swarm/issues'
+issues_url 'https://github.com/strocknar/jenkins_swarm/issues'
 
 # The `source_url` points to the development reposiory for this cookbook.  A
 # `View Source` link will be displayed on this cookbook's page when uploaded to
 # a Supermarket.
 #
-source_url 'https://github.exacttarget.com/chef-supermarket/jenkins_swarm/jenkins_swarm'
+source_url 'https://github.com/strocknar/jenkins_swarm'
