@@ -1,0 +1,34 @@
+.vagrant
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+
+# Bundler
+Gemfile.lock
+bin/*
+.bundle/*
+
+# test kitchen
+.kitchen/
+.kitchen.local.yml
+.kitchen.list.yml
+
+# Chef
+Berksfile.lock
+.zero-knife.rb
+Policyfile.lock.json
+
+# Files
+*.exe
+*.zip
+*.msi
+*.gz
+*.tar
+
+# Secret
+files/jenkins.qa.local.pem
+test/environments/kitchen.json
+test/integration/default/encrypted_data_bag_secret

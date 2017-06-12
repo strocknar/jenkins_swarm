@@ -1,0 +1,9 @@
+{
+  "id": "keys",
+  "<jenkins_swarm_username>": {
+    "encrypted_data": "SupersillyExtraLongEncryptedStringAA=as98yu\n",
+    "iv": "SomeMOreData\n",
+    "version": 1,
+    "cipher": "aes-256-cbc"
+  }
+}

@@ -1,0 +1,135 @@
+#!/bin/bash
+# swarm_service: Start/Stop the Jenkins Swarm service
+#
+# chkconfig: 2345 20 80
+# description: swarm_service registeres with a Jenkins master
+#
+# processname: java
+
+if [ $UID -ne 0 ] ; then
+  echo "User has insufficient privilege."
+  exit 4
+fi
+
+if [ -f /etc/init.d/functions ] ; then
+   . /etc/init.d/functions
+elif [ -f /etc/rc.d/init.d/functions ] ; then
+   . /etc/rc.d/init.d/functions
+else
+   exit 0
+fi
+
+PIDFILE=/var/run/swarm.pid
+#java -jar $swarm_file -disableSslVerification -fsroot $jenkins_home -executors $executors -labels $labels -name $hostname -master $jenkins_master -username $username -password $password &
+EXEC='<%= @java_cmd %>'
+PROG="Swarm"
+. <%= node['jenkins_swarm']['parameters']['fsroot'] %>/.secret
+
+RETVAL=0
+
+start() {
+  echo "Starting $PROG"
+  daemon --pidfile="$PIDFILE" --user="<%= node['jenkins_swarm']['client']['service_user'] %>" "$EXEC" >> "<%= node['jenkins_swarm']['parameters']['fsroot'] %>/swarm.log" 2>&1 &
+  RETVAL=$?
+  sleep 1
+  pid=`pgrep -f "$EXEC"`
+  if [ -n "$pid" ]
+  then
+    echo $pid > "$PIDFILE"
+    success $"Starting $PROG"
+  else
+    failure $"Starting $PROG"
+    return 1
+  fi
+}
+
+kill_me() {
+  # This is needed in case the EXEC changes while swarm is still running.
+  if [ -f "$PIDFILE" ]
+  then
+    for fpid in `cat $PIDFILE`
+    do
+      echo "kill $fpid"
+      kill -9 $fpid
+    done
+    rm -f $PIDFILE > /dev/null 2>&1
+    return 0
+  else
+    return 1
+  fi
+}
+
+stop() {
+  SUCCEEDED=false
+  pid=`pgrep -f "$EXEC"`
+  if [ -n "$pid" ]
+  then
+    pkill -f "$EXEC"
+    rm -f $PIDFILE > /dev/null 2>&1
+    SUCCEEDED=true
+  else
+    echo "Service not found by pgrep"
+  fi
+  if [ -f "$PIDFILE" ]
+  then
+    kill_me
+    SUCCEEDED=true
+  fi
+
+  if $SUCCEEDED
+  then
+    success $"Stopping $PROG"
+  else
+    failure $"Stopping $PROG"
+  fi
+}
+
+restart(){
+  check_status_q && stop
+  sleep 5
+  start
+}
+
+check_status(){
+  pid=`pgrep -f "$EXEC"`
+  if [ -f "$PIDFILE" ] && [ -z "$pid" ]
+  then
+    echo "PID file found, but service is dead"
+    echo "PIDs in file: `cat $PIDFILE`"
+    kill_me
+  fi
+
+  if [ -n "$pid" ]
+  then
+    echo "$PROG is running"
+    return 0
+  else
+    echo "$PROG is not running"
+    return 1
+  fi
+}
+
+check_status_q(){
+  check_status > /dev/null 2>&1
+}
+
+case $1 in
+	start)
+    check_status_q && exit 0
+    $1
+	  ;;
+	stop)
+    check_status_q || exit 0
+    $1
+    ;;
+  restart)
+    $1
+    ;;
+  status)
+    check_status
+    ;;
+	*)
+	  echo "usage: $0 {start|stop|restart|status}"
+    ;;
+esac
+exit 0

@@ -1,0 +1,22 @@
+<configuration>
+  <id>jenkins_swarm</id>
+  <name>Jenkins Slave via swarm <%= @swarm_version %></name>
+  <description>This service runs a Jenkins slave.  It is created via Chef.</description>
+  <executable>java</executable>
+  <arguments><%= @swarm_command_line %></arguments>
+  <logmode>rotate</logmode>
+  <startmode>Automatic</startmode>
+  <!-- if we want the slave process to run as a specific user -->
+  <!--
+  <serviceaccount>
+   <domain><%= @domain %></domain>
+   <user><%= @user %></user>
+   <password><%= @pass %></password>
+   <allowservicelogon>true</allowservicelogon>
+  </serviceaccount>
+-->
+  <env name="SWARM_PW" value="<%= @pass %>" />
+  <onfailure action="restart" delay="10 sec"/>
+  <onfailure action="restart" delay="10 sec"/>
+  <onfailure action="restart" delay="10 sec"/>
+</configuration>
