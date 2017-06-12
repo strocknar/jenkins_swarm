@@ -1,10 +1,10 @@
 name 'jenkins_swarm'
 maintainer 'Salesforce Infrastructure Automation'
 maintainer_email 'rvankleeck@salesforce.com'
-license 'all_rights'
+license 'BSD3'
 description 'Installs/Configures jenkins swarm on a node'
 long_description 'Installs/Configures jenkins swarm on a node'
-version '1.1.7'
+version '1.1.8'
 chef_version '>= 12.6' if respond_to?(:chef_version)
 supports 'centos'
 supports 'windows'
