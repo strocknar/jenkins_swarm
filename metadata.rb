@@ -4,9 +4,10 @@ maintainer_email 'rvankleeck@salesforce.com'
 license 'all_rights'
 description 'Installs/Configures jenkins swarm on a node'
 long_description 'Installs/Configures jenkins swarm on a node'
-version '1.1.6'
+version '1.1.7'
 chef_version '>= 12.6' if respond_to?(:chef_version)
-supports 'centos windows'
+supports 'centos'
+supports 'windows'
 
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when
