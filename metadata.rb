@@ -1,7 +1,7 @@
 name 'jenkins_swarm'
 maintainer 'Salesforce Infrastructure Automation'
 maintainer_email 'rvankleeck@salesforce.com'
-license 'BSD3'
+license 'BSD-3-Clause'
 description 'Installs/Configures jenkins swarm on a node'
 long_description 'Installs/Configures jenkins swarm on a node'
 version '1.1.8'
