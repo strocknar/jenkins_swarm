@@ -28,8 +28,14 @@ directory node['jenkins_swarm']['parameters']['fsroot'].to_s do
   action :create
 end
 
-remote_file node['jenkins_swarm']['client']['file_location'].to_s do
-  source node['jenkins_swarm']['client']['source']
+# remote_file node['jenkins_swarm']['client']['file_location'].to_s do
+#   source node['jenkins_swarm']['client']['source']
+#   mode 0644
+#   owner node['jenkins_swarm']['client']['service_user'].to_s
+#   group node['jenkins_swarm']['client']['service_user'].to_s
+# end
+cookbook_file node['jenkins_swarm']['client']['file_location'].to_s do
+  source 'swarm-client-3.3.jar'
   mode 0644
   owner node['jenkins_swarm']['client']['service_user'].to_s
   group node['jenkins_swarm']['client']['service_user'].to_s
