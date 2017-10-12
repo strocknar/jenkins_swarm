@@ -6,7 +6,7 @@ include_recipe 'jenkins_swarm::prereqs'
 
 if node['jenkins_swarm']['parameters']['password'].nil?
   Chef::Log.warn('Password not set. Getting encrypted data bag contents')
-  jenkins_keys = Chef::EncryptedDataBagItem.load('jenkins', 'keys')
+  jenkins_keys = data_bag_item('jenkins', 'keys')
   # Chef::Log.warn("-=# SWARM_PW: #{jenkins_keys[node['jenkins_swarm']['parameters']['username']]}")
   ENV['SWARM_PW'] = jenkins_keys[node['jenkins_swarm']['parameters']['username']]
 else
@@ -28,14 +28,9 @@ directory node['jenkins_swarm']['parameters']['fsroot'].to_s do
   action :create
 end
 
-# remote_file node['jenkins_swarm']['client']['file_location'].to_s do
-#   source node['jenkins_swarm']['client']['source']
-#   mode 0644
-#   owner node['jenkins_swarm']['client']['service_user'].to_s
-#   group node['jenkins_swarm']['client']['service_user'].to_s
-# end
-cookbook_file node['jenkins_swarm']['client']['file_location'].to_s do
-  source 'swarm-client-3.3.jar'
+remote_file node['jenkins_swarm']['client']['file_location'].to_s do
+  source node['jenkins_swarm']['client']['source']
+  use_last_modified false
   mode 0644
   owner node['jenkins_swarm']['client']['service_user'].to_s
   group node['jenkins_swarm']['client']['service_user'].to_s
