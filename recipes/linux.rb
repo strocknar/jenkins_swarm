@@ -21,6 +21,7 @@ template "#{fsroot}/.secret" do
   user 'root'
   group 'root'
   variables(secret: ENV['SWARM_PW'])
+  sensitive true
 end
 
 template '/etc/init.d/swarm' do
