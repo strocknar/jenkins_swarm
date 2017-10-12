@@ -55,7 +55,7 @@ default['jenkins_swarm']['parameters'].tap do |parameters|
   # (Jenkins -> Manage Jenkins -> Manage and Assign Roles)
   # (https://<jenkins_server>/role-strategy/)
   #
-  parameters['username'] = 'jenkins'
+  parameters['username'] = 'jenkins-svc'
   #
   # Password to use when logging into Jenkins. If this is not set, it will
   # look for an encrypted data bag called jenkins with an id of 'keys' and

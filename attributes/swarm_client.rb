@@ -40,6 +40,10 @@ default['jenkins_swarm']['client'].tap do |client|
   #
   client['jvm_options'] = nil
   #
+  # Whether or not to use SSH keys for the service user
+  #
+  client['service_user_ssh_keys'] = true
+  #
   # Build the java command from Attributes
   # java -jar $swarm_file -disableSslVerification -deleteExistingClients -fsroot $jenkins_home -executors $executors -labels $labels -name $hostname -master $jenkins_master -username $username -passwordEnvVariable SWARM_PW &
   command = []
