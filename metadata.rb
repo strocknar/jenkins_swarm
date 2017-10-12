@@ -4,7 +4,7 @@ maintainer_email 'rvankleeck@salesforce.com'
 license 'BSD-3-Clause'
 description 'Installs/Configures jenkins swarm on a node'
 long_description 'Installs/Configures jenkins swarm on a node'
-version '1.1.8'
+version '1.1.9'
 chef_version '>= 12.6' if respond_to?(:chef_version)
 supports 'centos'
 supports 'windows'

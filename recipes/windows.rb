@@ -33,6 +33,7 @@ template "#{node['jenkins_swarm']['parameters']['fsroot']}\\jenkins_swarm.xml" d
     swarm_command_line: node['jenkins_swarm']['client']['java_cmd']
   )
   notifies :run, 'powershell_script[remove_swarm_service]', :immediate
+  sensitive true
 end
 
 powershell_script 'remove_swarm_service' do
